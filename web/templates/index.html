@@ -17,7 +17,9 @@
             stroke: #999;
             stroke-opacity: .6;
         }
-
+        body {
+            padding: 8px;
+        }
         </style>
     </head>
     <body>
@@ -31,11 +33,16 @@
             <div class="col-md-4" id="search">
 
                 <form class="form-inline" id="artist-search" role="form">
-                    <div class="form-group">
+                    <div class="input-group">
                         <label class="sr-only" for="query_artist">Query artist</label>
                         <input type="text" class="form-control" id="query_artist" placeholder="Artist name">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                            <label class="sr-only" for="search-button">Search</label>
+                            <span class="glyphicon glyphicon-search" id="search-button"></span>
+                            </button>
+                        </span>
                     </div>
-                    <button class="btn btn-default">Search</button>
                 </form>
                 
                 <div class="row container col-md-12">
