@@ -5,7 +5,8 @@ import argparse
 import ConfigParser
 import sys, os
 
-import cPickle as pickle
+import searcher
+
 import ujson as json
 
 DEBUG = True
@@ -34,8 +35,7 @@ def run(**kwargs):
 @app.route('/search/', methods=['GET'], defaults={'query': ''})
 @app.route('/search/<path:query>', methods=['GET'])
 def search(query):
-#     return json.encode(rhymer.search(query))
-    return json.encode([])
+    return json.encode(searcher.search(query))
 
 @app.route('/')
 def index(q):
@@ -82,6 +82,8 @@ if __name__ == '__main__':
 
     if os.environ.get('ENV') == 'production':
         port = int(os.environ.get('PORT'))
+
+    searcher.init(CFG)
 
     run(host=parameters['host'], port=port, debug=DEBUG)
 
