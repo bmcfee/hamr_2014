@@ -2,7 +2,6 @@ import whoosh
 import whoosh.index
 import whoosh.qparser
 import cPickle as pickle
-from pprint import pprint
 
 id_to_name      = None
 member_to_group = None
@@ -31,6 +30,72 @@ def init(CFG):
     fulltext_index = whoosh.index.open_dir(CFG['server']['fulltext'])
     parser = whoosh.qparser.MultifieldParser(['name', 'profile'], fulltext_index.schema)
 
+# TODO:   2014-01-26 02:18:01 by Brian McFee <brm2132@columbia.edu>
+#  build a graph, starting from a given id
+#   sample out to depth <= D
+#   keep track of whether it's an artist or a group
+
+# FIXME:  2014-01-26 03:24:34 by Brian McFee <brm2132@columbia.edu>
+#  miles davis = 262586
+
+def bfs_search(seed_id, max_depth=5):
+
+    bfs_queue = [(0, seed_id)]
+
+    vertices    = set()
+    edges       = {}
+
+    while bfs_queue:
+        distance, vertex_id = bfs_queue.pop(0)
+
+        if distance > max_depth:
+            break
+
+        vertices.add(vertex_id)
+        
+        if distance == max_depth:
+            continue
+
+        # Get all the edges for this vertex
+        new_nodes = set()
+
+        if vertex_id in member_to_group:
+            new_nodes.update(member_to_group[vertex_id])
+
+        if vertex_id in group_to_member:
+            new_nodes.update(group_to_member[vertex_id])
+        
+        # Add the new nodes to the edge set
+        for n in new_nodes:
+            if vertex_id not in edges:
+                edges[vertex_id] = set()
+
+            edges[vertex_id].add(n)
+
+            # Queue these new nodes for insertion into the graph
+            bfs_queue.append( (1 + distance, n) )
+
+    # Now we need to pack up the graph in a json-friendly format
+    vertices = list(vertices)
+
+    for k in edges:
+        edges[k] = list(edges[k])
+
+    vmap = {}
+    nodes = []
+    for index, vertex in enumerate(vertices):
+        vmap[vertex] = index
+        nodes.append({  'name': id_to_name[vertex], 
+                        'group': 1 + int(vertex in group_to_member)})
+
+    links = []
+    for source in edges:
+        for target in edges[source]:
+            links.append( { 'source': vmap[source], 
+                            'target': vmap[target],
+                            'value': 1 })
+
+    return {'nodes': nodes, 'links': links}
 
 def search(query=''):
 
