@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import lxml.etree
 import lxml.objectify
 
@@ -45,7 +46,7 @@ def create_index_writer(index_path):
     A = whoosh.analysis.StemmingAnalyzer() | whoosh.analysis.CharsetFilter(accent_map)
 
     schema = whoosh.fields.Schema(  artist_id   =   whoosh.fields.NUMERIC(stored=True),
-                                    name        =   whoosh.fields.TEXT(stored=True, analyzer=A),
+                                    name        =   whoosh.fields.TEXT(stored=True, field_boost=8.0, analyzer=A),
                                     profile     =   whoosh.fields.TEXT(stored=True, analyzer=A))
 
     index = whoosh.index.create_in(index_path, schema)
