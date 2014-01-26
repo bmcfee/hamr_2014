@@ -35,8 +35,6 @@ function search_results(results) {
     $('.result-item').on('click', function(event) {
         var input = $($(this).find('input')[0]);
 
-        $('#seed_id').val(input.val());
-
         search_graph(input.val(), $('#depth').val());
     });
 }
@@ -46,6 +44,8 @@ $(document).ready(function() {
 });
 
 function search_graph(seed_id, depth) {
+    
+    $('#seed_id').val(seed_id);
 
     $.ajax({ url: "/graph/" + seed_id + "/depth/" + depth, dataType: 'json'}).done(build_graph);
 
@@ -119,6 +119,12 @@ function build_graph(graph) {
         .style("fill", function(d) { return color(d.group); })
         .call(force.drag);
     
+    $('.node').on('dblclick', function(event) {
+        var n = d3.select(this).node();
+        var artist_id = n.__data__.id;
+        search_graph(artist_id, $('#depth').val());
+    });
+
     var anchorLink = vis
         .selectAll("line.anchorLink")
         .data(labelAnchorLinks)
