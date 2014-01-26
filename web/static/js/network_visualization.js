@@ -55,7 +55,7 @@ function search_graph(seed_id, depth) {
 
 function trim_text(s, n) {
 
-    if (s.len < n) {
+    if (s.length < n) {
         return s;
     }
 
@@ -75,8 +75,13 @@ function build_graph(graph) {
     
     // Get rid of the old svg
     $('#network > svg').remove();
-    
-    $("#profile").append(trim_text(graph.profile, 300));
+   
+    if (graph.profile.length > 0) {
+        $("#profile").removeClass('hidden');
+        $("#profile").append(trim_text(graph.profile, 300));
+    } else {
+        $("#profile").addClass('hidden');
+    }
 
     nodes = graph.nodes
     links = graph.links
