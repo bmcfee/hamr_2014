@@ -71,8 +71,11 @@ function build_graph(graph) {
 
     var labelDistance = 0;
     
-    var color = d3.scale.category20();
-    
+//     var color = d3.scale.category20();
+    var color = d3.scale.ordinal()
+                .domain([0, 1, 2, 3])
+                .range(colorbrewer.RdYlGn[4]);
+
     // Get rid of the old svg
     $('#network > svg').remove();
    

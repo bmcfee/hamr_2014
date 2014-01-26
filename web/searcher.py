@@ -39,9 +39,13 @@ def bfs_search(seed_id, max_depth=2):
 
     vertices    = set()
     edges       = {}
+    dmap        = {}
 
     while bfs_queue:
         distance, vertex_id = bfs_queue.pop(0)
+
+        if vertex_id not in dmap:
+            dmap[vertex_id] = distance
 
         if distance > max_depth:
             break
@@ -80,15 +84,15 @@ def bfs_search(seed_id, max_depth=2):
     nodes = []
     for index, vertex in enumerate(vertices):
         vmap[vertex] = index
-        group = 1
-        if vertex == seed_id:
-            group = 1
-        else:
-            group = 2 + int(vertex in group_to_member)
+#         group = 1
+#         if vertex == seed_id:
+#             group = 1
+#         else:
+#             group = 2 + int(vertex in group_to_member)
 
-        nodes.append({  'name': id_to_name[vertex], 
-                        'id': vertex,
-                        'group': group})
+        nodes.append({  'name':     id_to_name[vertex], 
+                        'id':       vertex,
+                        'group':    dmap[vertex]})
 
     links = []
     for source in edges:
