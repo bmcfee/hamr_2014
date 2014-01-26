@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-import lxml.etree
-import lxml.objectify
 
+import argparse
 import cPickle as pickle
+import os
+import sys
+
+import lxml.etree
+
 import whoosh, whoosh.fields, whoosh.index, whoosh.analysis
 from whoosh.support.charset import accent_map
-
-import os
 
 def formatXML(node):
     """
@@ -38,7 +40,8 @@ def formatXML(node):
     return ret
 
 def create_index_writer(index_path):
-
+    '''Create a new whoosh index in the given directory path'''
+    
     if not os.path.exists(index_path):
         os.mkdir(index_path)
         pass
@@ -53,7 +56,9 @@ def create_index_writer(index_path):
 
     return index.writer()
 
+
 def build_whoosh_index(root, index_path, good_ids):
+    '''Populate the whoosh index from the XML tree'''
 
     writer = create_index_writer(index_path)
     
@@ -78,14 +83,44 @@ def build_whoosh_index(root, index_path, good_ids):
     writer.commit()
 
 
+
 # Load the group/membership ids
-good_ids = set()
+def populate_whoosh(group_members=None, members_to_group=None, discogs_xml=None,
+                    whoosh_dir=None):
+    '''Popular the whoosh database using only artists with degree 1 or higher'''
 
-with open('/home/bmcfee/git/hamr_2014/data/group_members.pickle', 'r') as f:
-    good_ids.update(pickle.load(f).keys())
+    good_ids = set()
 
-with open('/home/bmcfee/git/hamr_2014/data/member_to_group.pickle', 'r') as f:
-    good_ids.update(pickle.load(f).keys())
+    with open(group_members, 'r') as f:
+        good_ids.update(pickle.load(f).keys())
 
-tree = lxml.etree.parse('/home/bmcfee/data/discogs_20140101_artists.xml.gz')
-build_whoosh_index(tree.getroot(), '/home/bmcfee/git/hamr_2014/data/fulltext', good_ids)
+    with open(members_to_group, 'r') as f:
+        good_ids.update(pickle.load(f).keys())
+
+    tree = lxml.etree.parse(discogs_xml)
+
+    build_whoosh_index(tree.getroot(), whoosh_dir, good_ids)
+
+def process_arguments():
+    '''Process command-line arguments'''
+
+    parser = argparse.ArgumentParser(description='Discogs artist xml to whoosh fulltext')
+
+    parser.add_argument('group_members',    action='store',
+                        help    = 'path to the group_members.pickle file')
+    
+    parser.add_argument('members_to_group',    action='store',
+                        help    = 'path to the members_to_group.pickle file')
+
+    parser.add_argument('discogs_xml',    action='store',
+                        help    = 'path to the Discogs artist xml file')
+
+    parser.add_argument('whoosh_dir',    action='store',
+                        help    = 'path to build the whoosh fulltext index')
+
+    return vars(parser.parse_args(sys.argv[1:]))
+
+if __name__ == '__main__':
+    args = process_arguments()
+
+    populate_whoosh(**args)
