@@ -19,7 +19,7 @@ function search_results(results) {
         var li = $('<li></li>')
         li.append(results[i]['name']);
 
-        li.addClass('media');
+        li.addClass('result-item');
         li.addClass('list-group-item');
 
         var idx = $('<input type="hidden">');
@@ -29,6 +29,13 @@ function search_results(results) {
 
         ul.append(li);
     }
+
+    $('.result-item').dblclick(function(event) {
+
+        var input = $($(this).find('input')[0]);
+
+        search_graph(input.val(), 2);
+    });
 }
 
 $(document).ready(function() {
