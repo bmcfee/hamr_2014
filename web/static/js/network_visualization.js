@@ -8,30 +8,27 @@ $("#artist-search").submit(function(event) {
 
 function search_results(results) {
 
-    $("#search-results > li").remove();
-
     // populate search results list
     var ul = $("#search-results");
 
+    $("#search-results > li").remove();
+
     for (var i in results) {
-        console.log(results[i]);
+        var btn = $('<button></button>');
+        btn.addClass('btn')
+           .addClass('btn-default')
+           .addClass('result-item');
 
-        var li = $('<li></li>')
-        li.append(results[i]['name']);
-
-        li.addClass('result-item');
-        li.addClass('list-group-item');
+        btn.append(results[i]['name']);
 
         var idx = $('<input type="hidden">');
 
         idx.val(results[i]['artist_id']);
-        li.append(idx);
-
-        ul.append(li);
+        btn.append(idx);
+        ul.append(btn);
     }
 
-    $('.result-item').dblclick(function(event) {
-
+    $('.result-item').on('click', function(event) {
         var input = $($(this).find('input')[0]);
 
         search_graph(input.val(), 2);
