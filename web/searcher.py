@@ -97,7 +97,12 @@ def bfs_search(seed_id, max_depth=2):
                             'target': vmap[target],
                             'value': 1 })
 
-    return {'nodes': nodes, 'links': links}
+    # Get the profile
+    profile = ''
+    with fulltext_index.searcher() as search: 
+        profile = search.document(artist_id=seed_id)['profile']
+        
+    return {'nodes': nodes, 'links': links, 'profile': profile}
 
 def search(query=''):
 

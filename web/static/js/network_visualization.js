@@ -45,6 +45,8 @@ $(document).ready(function() {
 
 function search_graph(seed_id, depth) {
     
+    $('#profile').empty();
+
     $('#seed_id').val(seed_id);
 
     $.ajax({ url: "/graph/" + seed_id + "/depth/" + depth, dataType: 'json'}).done(build_graph);
@@ -63,6 +65,8 @@ function build_graph(graph) {
     
     // Get rid of the old svg
     $('#network > svg').remove();
+    
+    $("#profile").append(graph.profile);
 
     nodes = graph.nodes
     links = graph.links
