@@ -11,7 +11,7 @@ function search_results(results) {
     // populate search results list
     var ul = $("#search-results");
 
-    $("#search-results > li").remove();
+    $("#search-results > *").remove();
 
     for (var i in results) {
         var btn = $('<button></button>');
@@ -125,7 +125,7 @@ function build_graph(graph) {
     anchorNode.append("svg:circle").attr("r", 0).style("fill", "#FFF");
     
     anchorNode.append("svg:text").text(function(d, i) {
-        console.log(d.node.name);
+        //console.log(d.node.name);
         return i % 2 == 0 ? "" : d.node.name;
     
     }).style("fill", "#555").style("font-family", "Arial").style("font-size", 12);
