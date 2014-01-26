@@ -84,12 +84,6 @@ def bfs_search(seed_id, max_depth=2):
     nodes = []
     for index, vertex in enumerate(vertices):
         vmap[vertex] = index
-#         group = 1
-#         if vertex == seed_id:
-#             group = 1
-#         else:
-#             group = 2 + int(vertex in group_to_member)
-
         nodes.append({  'name':     id_to_name[vertex], 
                         'id':       vertex,
                         'group':    dmap[vertex]})

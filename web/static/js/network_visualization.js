@@ -141,11 +141,6 @@ function build_graph(graph) {
         .style("fill", function(d) { return color(d.group); })
         .call(force.drag);
     
-    $('.node').on('dblclick', function(event) {
-        var n = d3.select(this).node();
-        var artist_id = n.__data__.id;
-        search_graph(artist_id, $('#depth').val());
-    });
 
     var anchorLink = vis
         .selectAll("line.anchorLink")
@@ -162,8 +157,21 @@ function build_graph(graph) {
         //console.log(d.node.name);
         return i % 2 == 0 ? "" : d.node.name;
     
-    }).style("fill", "#555").style("font-family", "Arial").style("font-size", 12);
+    }).style("fill", "#555")
+        .style("font-family", "Arial")
+        .style("font-size", 11)
+        .attr('class', 'text-label');
     
+    $('.node').on('dblclick', function(event) {
+        var n = d3.select(this).node();
+        var artist_id = n.__data__.id;
+        search_graph(artist_id, $('#depth').val());
+    });
+    $('.text-label').on('dblclick', function(event) {
+        var n = d3.select(this).node();
+        var artist_id = n.__data__.node.id;
+        search_graph(artist_id, $('#depth').val());
+    });
     var updateLink = function() {
         this.attr("x1", function(d) {
             return d.source.x;
