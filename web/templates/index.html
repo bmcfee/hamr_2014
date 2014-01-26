@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
         <style>
+        #network { 
+            width: 100%; 
+            height: 512px;
+        }
         .node {
             stroke: #fff;
             stroke-width: 1.5px;
@@ -18,6 +22,33 @@
     </head>
     <body>
         <form action=""><input type="hidden" id="seed_id" value="{{ seed_id }}"></form>
+        <div class="page-header">
+            <h2>Artist network visualizer</h2>
+        </div>
+
+        <div class="row container">
+
+            <div class="col-md-4" id="search">
+
+                <form class="form-inline" id="artist-search" role="form">
+                    <div class="form-group">
+                        <label class="sr-only" for="query_artist">Query artist</label>
+                        <input type="text" class="form-control" id="query_artist" placeholder="Artist name">
+                    </div>
+                    <button class="btn btn-default">Search</button>
+                </form>
+                
+                <div class="row container col-md-12">
+                    <ul id="search-results" class="list-group">
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <div id="network"></div>
+            </div>
+    
+        </div>
     </body>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>

@@ -104,7 +104,7 @@ def search(query=''):
     results = []
 
     with fulltext_index.searcher() as search: 
-        results = [(r['artist_id'], r['name']) for r in search.search(parser.parse(unicode(query)), limit=15)]
+        results = [{'artist_id': r['artist_id'], 'name': r['name']} for r in search.search(parser.parse(unicode(query)), limit=15)]
 
     return results
 

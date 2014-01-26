@@ -1,3 +1,36 @@
+$("#artist-search").submit(function(event) {
+    var query = $('#query_artist').val();
+
+    event.preventDefault();
+
+    $.ajax({ url: "/search/" + encodeURIComponent(query), dataType: 'json'}).done(search_results);
+});
+
+function search_results(results) {
+
+    $("#search-results > li").remove();
+
+    // populate search results list
+    var ul = $("#search-results");
+
+    for (var i in results) {
+        console.log(results[i]);
+
+        var li = $('<li></li>')
+        li.append(results[i]['name']);
+
+        li.addClass('media');
+        li.addClass('list-group-item');
+
+        var idx = $('<input type="hidden">');
+
+        idx.val(results[i]['artist_id']);
+        li.append(idx);
+
+        ul.append(li);
+    }
+}
+
 $(document).ready(function() {
     search_graph($('#seed_id').val(), 2);
 });
@@ -9,15 +42,17 @@ function search_graph(seed_id, depth) {
 }
 
 function build_graph(graph) {
-    var width = 1024,
-        height = 640;
+
+    //  get this from the div styling
+    var width  = $('#network').width(),
+        height = $('#network').height();
 
     var labelDistance = 0;
     
     var color = d3.scale.category20();
     
     // Get rid of the old svg
-    $('body > svg').remove();
+    $('#network > svg').remove();
 
     nodes = graph.nodes
     links = graph.links
@@ -56,7 +91,7 @@ function build_graph(graph) {
     labelForce.start();
     
 
-    var vis = d3.select("body").append("svg")
+    var vis = d3.select("#network").append("svg")
         .attr("width", width)
         .attr("height", height);
     
