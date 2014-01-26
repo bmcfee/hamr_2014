@@ -2,7 +2,7 @@
 // $.ajax({ url: "/graph/57210/depth/2", dataType: 'json' }).done(build_graph);
 // $.ajax({ url: "/graph/23755/depth/2", dataType: 'json' }).done(build_graph);
 
-search_graph(57210, 2);
+search_graph($('#seed_id').val(), 2);
 
 function search_graph(seed_id, depth) {
 

@@ -42,10 +42,12 @@ def search(query):
 def graph(seed_id, depth):
     return json.encode(searcher.bfs_search(seed_id, max_depth=min(depth, 2)))
 
-@app.route('/')
-def index(q):
+#  miles davis = 262586
+@app.route('/', methods=['GET'], defaults={'seed_id': 262586})
+@app.route('/<int:seed_id>', methods=['GET'])
+def index(seed_id):
     '''Top-level web page'''
-    return flask.render_template('index.html', query=q)
+    return flask.render_template('index.html', seed_id=seed_id)
 
 
 # Main block
