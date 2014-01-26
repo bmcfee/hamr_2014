@@ -6,6 +6,10 @@ $("#artist-search").submit(function(event) {
     $.ajax({ url: "/search/" + encodeURIComponent(query), dataType: 'json'}).done(search_results);
 });
 
+$("#depth").on('change', function(event) {
+    search_graph($('#seed_id').val(), $('#depth').val());
+});
+
 function search_results(results) {
 
     // populate search results list
@@ -31,12 +35,14 @@ function search_results(results) {
     $('.result-item').on('click', function(event) {
         var input = $($(this).find('input')[0]);
 
-        search_graph(input.val(), 2);
+        $('#seed_id').val(input.val());
+
+        search_graph(input.val(), $('#depth').val());
     });
 }
 
 $(document).ready(function() {
-    search_graph($('#seed_id').val(), 2);
+    search_graph($('#seed_id').val(), $('#depth').val());
 });
 
 function search_graph(seed_id, depth) {
