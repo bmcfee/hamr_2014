@@ -33,7 +33,7 @@ def init(CFG):
 # 2014-01-26 03:24:34 by Brian McFee <brm2132@columbia.edu>
 #  miles davis = 262586
 
-def bfs_search(seed_id, max_depth=5):
+def bfs_search(seed_id, max_depth=2):
 
     bfs_queue = [(0, seed_id)]
 
@@ -80,9 +80,15 @@ def bfs_search(seed_id, max_depth=5):
     nodes = []
     for index, vertex in enumerate(vertices):
         vmap[vertex] = index
+        group = 1
+        if vertex == seed_id:
+            group = 1
+        else:
+            group = 2 + int(vertex in group_to_member)
+
         nodes.append({  'name': id_to_name[vertex], 
                         'id': vertex,
-                        'group': 1 + int(vertex in group_to_member)})
+                        'group': group})
 
     links = []
     for source in edges:

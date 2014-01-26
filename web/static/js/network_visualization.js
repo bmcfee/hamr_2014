@@ -1,14 +1,26 @@
-$.ajax({ url: "/graph/97545/depth/2",
-         dataType: 'json' }).done(build_graph);
+// $.ajax({ url: "/graph/253/depth/4", dataType: 'json' }).done(build_graph);
+// $.ajax({ url: "/graph/57210/depth/2", dataType: 'json' }).done(build_graph);
+// $.ajax({ url: "/graph/23755/depth/2", dataType: 'json' }).done(build_graph);
+
+search_graph(57210, 2);
+
+function search_graph(seed_id, depth) {
+
+    $.ajax({ url: "/graph/" + seed_id + "/depth/" + depth, dataType: 'json'}).done(build_graph);
+
+}
 
 function build_graph(graph) {
-    var width = 960,
-        height = 500;
+    var width = 1024,
+        height = 640;
 
     var labelDistance = 0;
     
     var color = d3.scale.category20();
     
+    // Get rid of the old svg
+    $('body > svg').remove();
+
     nodes = graph.nodes
     links = graph.links
     var labelAnchors = [];
@@ -45,12 +57,10 @@ function build_graph(graph) {
     
     labelForce.start();
     
+
     var vis = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
-    
-    
-    
     
     var link = vis.selectAll(".link")
         .data(graph.links)

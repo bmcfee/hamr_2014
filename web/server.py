@@ -37,10 +37,10 @@ def run(**kwargs):
 def search(query):
     return json.encode(searcher.search(query))
 
-@app.route('/graph/<int:seed_id>', methods=['GET'], defaults={'depth': 3})
+@app.route('/graph/<int:seed_id>', methods=['GET'], defaults={'depth': 2})
 @app.route('/graph/<int:seed_id>/depth/<int:depth>', methods=['GET'])
 def graph(seed_id, depth):
-    return json.encode(searcher.bfs_search(seed_id, max_depth=min(depth, 5)))
+    return json.encode(searcher.bfs_search(seed_id, max_depth=min(depth, 2)))
 
 @app.route('/')
 def index(q):
