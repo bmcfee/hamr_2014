@@ -53,6 +53,16 @@ function search_graph(seed_id, depth) {
 
 }
 
+function trim_text(s, n) {
+
+    if (s.len < n) {
+        return s;
+    }
+
+    return s.substr(0, n-4) + ' ...';
+
+}
+
 function build_graph(graph) {
 
     //  get this from the div styling
@@ -66,7 +76,7 @@ function build_graph(graph) {
     // Get rid of the old svg
     $('#network > svg').remove();
     
-    $("#profile").append(graph.profile);
+    $("#profile").append(trim_text(graph.profile, 300));
 
     nodes = graph.nodes
     links = graph.links
