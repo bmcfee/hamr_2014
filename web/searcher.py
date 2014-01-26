@@ -30,12 +30,7 @@ def init(CFG):
     fulltext_index = whoosh.index.open_dir(CFG['server']['fulltext'])
     parser = whoosh.qparser.MultifieldParser(['name', 'profile'], fulltext_index.schema)
 
-# TODO:   2014-01-26 02:18:01 by Brian McFee <brm2132@columbia.edu>
-#  build a graph, starting from a given id
-#   sample out to depth <= D
-#   keep track of whether it's an artist or a group
-
-# FIXME:  2014-01-26 03:24:34 by Brian McFee <brm2132@columbia.edu>
+# 2014-01-26 03:24:34 by Brian McFee <brm2132@columbia.edu>
 #  miles davis = 262586
 
 def bfs_search(seed_id, max_depth=5):
@@ -86,6 +81,7 @@ def bfs_search(seed_id, max_depth=5):
     for index, vertex in enumerate(vertices):
         vmap[vertex] = index
         nodes.append({  'name': id_to_name[vertex], 
+                        'id': vertex,
                         'group': 1 + int(vertex in group_to_member)})
 
     links = []
