@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+        .node {
+            stroke: #fff;
+            stroke-width: 1.5px;
+        }
 
-.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
+        .link {
+            stroke: #999;
+            stroke-opacity: .6;
+        }
 
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-}
-
-</style>
-<body>
-    <form action=""><input type="hidden" id="seed_id" value="{{ seed_id }}"></form>
-</body>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="/static/js/network_visualization.js"></script>
-
+        </style>
+    </head>
+    <body>
+        <form action=""><input type="hidden" id="seed_id" value="{{ seed_id }}"></form>
+    </body>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="/static/js/network_visualization.js"></script>
+</html>
