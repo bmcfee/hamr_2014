@@ -35,6 +35,8 @@ function search_results(results) {
     $('.result-item').on('click', function(event) {
         var input = $($(this).find('input')[0]);
 
+        $('.result-item').removeClass('active');
+        $(this).addClass('active');
         search_graph(input.val(), $('#depth').val());
     });
 }

@@ -38,42 +38,41 @@
     <body>
         <form action=""><input type="hidden" id="seed_id" value="{{ seed_id }}"></form>
 
-        <div class="row container">
-
-            <div class="col-md-4" id="search">
-                <div class="page-header">
-                    <h2>Artist network visualizer</h2>
+        <div class="container col-md-12">
+            <div class="col-md-4 panel panel-default" id="search">
+                <div class="panel-heading row">
+                    <h2 class="panel-title">Artist network visualizer</h2>
                 </div>
-                <form class="form-inline" id="artist-search" role="form">
-                    <div class="input-group">
-                        <label class="sr-only" for="query_artist">Query artist</label>
-                        <input type="text" class="form-control" id="query_artist" placeholder="Artist name">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
-                            <label class="sr-only" for="search-button">Search</label>
-                            <span class="glyphicon glyphicon-search" id="search-button"></span>
-                            </button>
-                        </span>
-                    </div>
-                    <div class="input-group row container">
-                        <label width="2", for="depth">Search depth</label>
-                        1 <input class="bst-input-range" type="range" id="depth" min="1", max="4" value="2" step="1"> 4
-                    </div>
-                </form>
+                <div class="panel-body">
+                    <form class="form-inline" id="artist-search" role="form">
+                        <div class="input-group">
+                            <label class="sr-only" for="query_artist">Query artist</label>
+                            <input type="text" class="form-control" id="query_artist" placeholder="Artist name">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                <label class="sr-only" for="search-button">Search</label>
+                                <span class="glyphicon glyphicon-search" id="search-button"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group row container">
+                            <label width="2", for="depth">Search depth</label>
+                            1 <input class="bst-input-range" type="range" id="depth" min="1", max="4" value="2" step="1"> 4
+                        </div>
+                    </form>
                 
-                <div class="row container col-md-12">
-                    <div class="pull-left btn-group-vertical" id="search-results">
-                    </div>
+                    <div class="pull-left btn-group-vertical" id="search-results"> </div>
                 </div>
-
             </div>
+
             <div class="col-md-8">
                 <div id="network"></div>
-
-                <div class="row content"><pre id="profile"></pre></div>
             </div>
-    
+
         </div>
+
+        <div class="row content col-md-12"><pre id="profile"></pre></div>
+
     </body>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
